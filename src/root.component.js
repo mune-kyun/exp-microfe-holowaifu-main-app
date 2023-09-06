@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Parcel from "single-spa-react/parcel";
 
 export default function Root(props) {
   return (
@@ -8,7 +9,17 @@ export default function Root(props) {
 
         <Routes>
           <Route path="/contact" element={<div>contact</div>} />
-          <Route path="/" element={<div>home</div>} />
+          <Route
+            path="/"
+            element={
+              <div>
+                <p>home</p>
+                <Parcel
+                  config={() => System.import("@component/landing-component")}
+                />
+              </div>
+            }
+          />
         </Routes>
       </div>
     </Router>
