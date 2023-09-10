@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Parcel from "single-spa-react/parcel";
 import { Helmet } from "react-helmet";
+import TalentPage from "./components/TalentPage";
 
 export default function Root(props) {
   return (
@@ -25,7 +26,12 @@ function MainPage(props) {
       const { from, action } = event.detail.customData;
 
       if (from == "landing-component") {
-        if (action == "press-enter") navigate("/contact");
+        if (action == "press-enter") navigate("/home");
+      } else if (from == "list-hololive") {
+        if (action == "click-card") {
+          const { name } = event.detail.customData.additionalData;
+          navigate(`/talent/${name}`);
+        }
       }
     });
   }, []);
@@ -33,7 +39,13 @@ function MainPage(props) {
   return (
     <div className="w-full h-full">
       <Routes>
-        <Route path="/contact" element={<div>contact</div>} />
+        <Route
+          path="/home"
+          element={
+            <Parcel config={() => System.import("@component/list-hololive")} />
+          }
+        />
+        <Route path="/talent/:slug" element={<TalentPage />} />
         <Route
           path="/"
           element={
