@@ -26,11 +26,18 @@ function MainPage(props) {
       const { from, action } = event.detail.customData;
 
       if (from == "landing-component") {
-        if (action == "press-enter") navigate("/home");
+        if (action == "press-enter") {
+          navigate("/home");
+          window.location.reload();
+        }
       } else if (from == "list-hololive") {
         if (action == "click-card") {
           const { name } = event.detail.customData.additionalData;
           navigate(`/talent/${name}`);
+        }
+      } else if (from == "detail-page") {
+        if (action == "back-to-home") {
+          navigate(`/home`);
         }
       }
     });
